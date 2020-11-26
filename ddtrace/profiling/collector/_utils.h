@@ -33,6 +33,20 @@
         size_type count, size;                                                                                         \
     } pfx##_array_t;
 
+#define foreach(var, array)                                                                                            \
+    for (typeof((array).count) __foreach_index_##var = 0; __foreach_index_##var < (array).count;                       \
+         __foreach_index_##var = (array).count)                                                                        \
+        for (typeof((array).tab) var = &(array).tab[__foreach_index_##var];                                            \
+             (__foreach_index_##var < (array).count) && (var = &(array).tab[__foreach_index_##var]);                   \
+             ++__foreach_index_##var)
+
+#define foreach_reverse(var, array)                                                                                    \
+    for (typeof((array).count) __foreach_index_##var = 0; __foreach_index_##var < (array).count;                       \
+         __foreach_index_##var = (array).count)                                                                        \
+        for (typeof((array).tab) var = &(array).tab[(array).count - 1];                                                \
+             (__foreach_index_##var < (array).count) && (var = &(array).tab[__foreach_index_##var]);                   \
+             ++__foreach_index_##var)
+
 /** Common array functions */
 #define ARRAY_COMMON_FUNCS(type_t, pfx, size_type, dtor)                                                               \
     static inline void pfx##_array_init(pfx##_array_t* arr)                                                            \
