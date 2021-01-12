@@ -5,6 +5,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
+#include "_utils.h"
 #include "_pymacro.h"
 #include "_memalloc_tb.h"
 #include "_memalloc_heap.h"
@@ -37,12 +38,6 @@ typedef struct
 
 static alloc_tracker_t* global_alloc_tracker;
 
-static uint64_t
-random_range(uint64_t max)
-{
-    /* Return a random number between [0, max[ */
-    return (uint64_t)((double)rand() / ((double)RAND_MAX + 1) * max);
-}
 
 static void
 memalloc_add_event(memalloc_context_t* ctx, void* ptr, size_t size)
